@@ -22,14 +22,14 @@ Phobos.configure({
   })
 srand(Time.now.to_i)
 
-loop do
-  t = Time.now
+done = 0
 
+loop do
   messages = 0.upto(rand(5)).map do |n|
-    nn = rand(100)
-    { topic: "random_numbers", payload: "at #{t}: #{nn}", key: nn.to_s }
+    done += 1
+    { topic: "random_numbers", payload: done.to_s, key: done.to_s }
   end
   FooProducer.producer.publish_list(messages)
 
-  sleep 15
+  sleep 10
 end
