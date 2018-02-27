@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 services:
   zoo1:
@@ -34,6 +34,12 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+    volumes:
+      - kafka-data-1:/kafka
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
 
   kafka2:
     image: wurstmeister/kafka:0.8.2.2-1
@@ -44,6 +50,12 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+    volumes:
+      - kafka-data-2:/kafka
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
 
   kafka3:
     image: wurstmeister/kafka:0.8.2.2-1
@@ -54,9 +66,28 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+    volumes:
+      - kafka-data-3:/kafka
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
 
   producer:
     image: kt-producer:latest
+    depends_on:
+      - kafka1
+      - kafka2
+      - kafka3
 
   consumer:
     image: kt-consumer:latest
+    depends_on:
+      - kafka1
+      - kafka2
+      - kafka3
+
+volumes:
+  kafka-data-1:
+  kafka-data-2:
+  kafka-data-3:
