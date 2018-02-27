@@ -33,6 +33,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3"
       KAFKA_BROKER_ID: 1
       KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
 
   kafka2:
     image: wurstmeister/kafka:0.8.2.2-1
@@ -42,6 +43,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3"
       KAFKA_BROKER_ID: 2
       KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
 
   kafka3:
     image: wurstmeister/kafka:0.8.2.2-1
@@ -51,6 +53,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3"
       KAFKA_BROKER_ID: 3
       KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
 
   producer:
     image: kt-producer:latest
