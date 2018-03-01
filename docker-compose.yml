@@ -25,13 +25,32 @@ services:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
 
+  zooweb:
+    image: elkozmon/zoonavigator-web:latest
+    ports:
+     - "8000:8000"
+    environment:
+      API_HOST: "zooapi"
+      API_PORT: 9000
+    depends_on:
+     - zooapi
+
+  zooapi:
+    image: elkozmon/zoonavigator-api:latest
+    environment:
+      SERVER_HTTP_PORT: 9000
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
   kafka1:
     image: wurstmeister/kafka:0.8.2.2-1
     # image: wurstmeister/kafka:0.9.0.1-1
     environment:
       KAFKA_ADVERTISED_HOST_NAME: "kafka1"
       KAFKA_ADVERTISED_PORT: "9092"
-      KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3"
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3/kafka"
       KAFKA_BROKER_ID: 1
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
@@ -50,7 +69,7 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: "kafka2"
       KAFKA_ADVERTISED_PORT: "9092"
-      KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3"
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3/kafka"
       KAFKA_BROKER_ID: 2
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
@@ -69,7 +88,7 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: "kafka3"
       KAFKA_ADVERTISED_PORT: "9092"
-      KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3"
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1,zoo2,zoo3/kafka"
       KAFKA_BROKER_ID: 3
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
