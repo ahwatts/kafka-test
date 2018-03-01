@@ -1,0 +1,4 @@
+/go/pkg
+/go/src/github.com/
+/go/src/gopkg.in/
+/go/src/kafka-test/.idea/

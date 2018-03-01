@@ -87,6 +87,13 @@ services:
       - kafka2
       - kafka3
 
+  goconsumer:
+    image: kt-go-consumer:latest
+    depends_on:
+      - kafka1
+      - kafka2
+      - kafka3
+
 volumes:
   kafka-data-1:
   kafka-data-2:
