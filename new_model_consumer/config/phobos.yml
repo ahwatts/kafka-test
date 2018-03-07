@@ -1,0 +1,27 @@
+---
+logger:
+  file: false
+kafka:
+  client_id: new_model_consumer
+  seed_brokers:
+    - "kafka1:9092"
+    - "kafka2:9092"
+    - "kafka3:9092"
+
+backoff:
+  min_ms: 1000
+  max_ms: 60000
+
+consumer:
+  session_timeout: 30
+  offset_commit_interval: 10
+  offset_commit_threshold: 0
+  offset_retention_time:
+  heartbeat_interval: 10
+
+listeners:
+  - handler: "NewModelConsumer::Handler"
+    group_id: "NewModelConsumer::Handler"
+    topic: random_numbers
+    max_concurrency: 1
+    delivery: batch

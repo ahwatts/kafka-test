@@ -1,0 +1,6 @@
+FROM ruby:2.5
+RUN gem install ruby-kafka -v '~> 0.4.0' && \
+    gem install phobos && \
+    gem install pry
+COPY new_model_consumer .
+CMD ["phobos", "start"]
